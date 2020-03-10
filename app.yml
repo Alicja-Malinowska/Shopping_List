@@ -1,3 +1,21 @@
 runtime: python27
 api_version: 1
 threadsafe: true
+
+handlers:
+- url: /list.html
+  script: shopping_list.app
+  login: required
+  #auth_fail_action: redirect - this is supposed to be a default
+
+
+- url: /.*
+  script: shopping_list.app
+
+
+libraries:
+- name: webapp2
+#this needs to be changed to the actual version!!!!!!!!!!!!!!!!x2
+  version: latest
+- name: jinja2
+  version: latest
