@@ -1,4 +1,18 @@
 {% extends "index.html" %}
 {% block head %}
-<p>I'm a list!</p>
+<p>Hello {{ nickname }}!</p>
+<a href="{{ url|safe }}" class="btn">{{ linktext }}</a>
+<form action="/list_html/add" method="post">
+    <label for="item">Add an item:</label><br>
+    <input type="text" id="item" name="item"><br>
+    <input type="submit" value="Add">
+</form>
+
+<div class="container" id="listArea">
+    {% for item in list_items %}
+    <ul>
+        <li>{{item.item}}</li>
+    </ul>
+    {% endfor %}
+</div>
 {% endblock %}

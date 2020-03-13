@@ -3,10 +3,15 @@ api_version: 1
 threadsafe: true
 
 handlers:
+
+- url: /list.html/add
+  script: shopping_list.app
+  
 - url: /list.html
   script: shopping_list.app
   login: required
   #auth_fail_action: redirect - this is supposed to be a default
+
 
 
 - url: /.*
