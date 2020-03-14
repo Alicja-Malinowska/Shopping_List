@@ -1,5 +1,5 @@
 import os
-
+import json
 import urllib
 #import users API to use for login and authentication
 from google.appengine.api import users
@@ -53,11 +53,11 @@ class Add(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
         new_item = List_item(user_id = user.user_id(), item = self.request.get('item'), parent = list_key())
-        new_item_key = new_item.put()
+        new_item.put()
         self.redirect('/list.html')
 
 class DeleteAll(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         user = users.get_current_user()
         list_query = List_item.query(List_item.user_id == user.user_id(), ancestor = list_key()).order(-List_item.date)
         list_items = list_query.fetch()
@@ -65,11 +65,18 @@ class DeleteAll(webapp2.RequestHandler):
             item.key.delete()
         self.redirect('/list.html')
 
+class DeleteItem(webapp2.RequestHandler):
+    def post(self):
+        item_id = self.request.get('item_id')
+        key = ndb.Key('Shopping List', 'List', 'List_item', int(item_id))
+        key.delete()
+        self.redirect('/list.html')
 
 app = webapp2.WSGIApplication([
     ('/', Home),
     ('/list.html', NewList),
     ('/list.html/add', Add),
-    ('/list.html/delete-all', DeleteAll)
+    ('/list.html/delete-all', DeleteAll),
+    ('/list.html/delete', DeleteItem)
     
 ], debug=True)# remember to remove!!!!!!!!!!!

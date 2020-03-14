@@ -12,12 +12,16 @@
     {% for item in list_items %}
     <ul>
         
-        <li>{{item.item}} </li>
+        <li>{{ item.item }}</li>
+        <form action="/list_html/delete" method="post">
+            <input type="hidden" name="item_id" value={{ item.key.id() }}>
+            <input type="submit" value="x">
+        </form>
         
     </ul>
     {% endfor %}
 </div>
-<form action="/list_html/delete-all" method="get">
+<form action="/list_html/delete-all" method="post">
     <input type="submit" value="Delete all">
 </form>
 {% endblock %}

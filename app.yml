@@ -4,11 +4,6 @@ threadsafe: true
 
 handlers:
 
-- url: /list.html/add
-  script: shopping_list.app
-
-- url: /list.html/delete-all
-  script: shopping_list.app
 
 - url: /list.html
   script: shopping_list.app
