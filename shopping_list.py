@@ -18,6 +18,7 @@ j_env = jinja2.Environment(
 
 DAFAULT_LIST_NAME = 'List'
 
+
 def list_key(name = DAFAULT_LIST_NAME):
     return ndb.Key('Shopping List', name)
 
@@ -52,11 +53,23 @@ class Add(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
         new_item = List_item(user_id = user.user_id(), item = self.request.get('item'), parent = list_key())
-        new_item.put()
+        new_item_key = new_item.put()
         self.redirect('/list.html')
+
+class DeleteAll(webapp2.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        list_query = List_item.query(List_item.user_id == user.user_id(), ancestor = list_key()).order(-List_item.date)
+        list_items = list_query.fetch()
+        for item in list_items:
+            item.key.delete()
+        self.redirect('/list.html')
+
 
 app = webapp2.WSGIApplication([
     ('/', Home),
     ('/list.html', NewList),
-    ('/list.html/add', Add)
-], debug=True)
+    ('/list.html/add', Add),
+    ('/list.html/delete-all', DeleteAll)
+    
+], debug=True)# remember to remove!!!!!!!!!!!

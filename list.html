@@ -11,8 +11,13 @@
 <div class="container" id="listArea">
     {% for item in list_items %}
     <ul>
-        <li>{{item.item}}</li>
+        
+        <li>{{item.item}} </li>
+        
     </ul>
     {% endfor %}
 </div>
+<form action="/list_html/delete-all" method="get">
+    <input type="submit" value="Delete all">
+</form>
 {% endblock %}
