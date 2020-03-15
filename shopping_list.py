@@ -35,8 +35,9 @@ class Home(webapp2.RequestHandler):
 
 class NewList(webapp2.RequestHandler):
     def get(self):
+        list_name = self.request.get('list_name', DAFAULT_LIST_NAME)
         user = users.get_current_user()
-        list_query = List_item.query(List_item.user_id == user.user_id(), ancestor = list_key()).order(-List_item.date)
+        list_query = List_item.query(List_item.user_id == user.user_id(), ancestor = list_key(list_name)).order(-List_item.date)
         list_items = list_query.fetch()
         url = users.create_logout_url(self.request.uri)
         linktext = 'Logout'
@@ -44,43 +45,53 @@ class NewList(webapp2.RequestHandler):
             'nickname': user.nickname(),
             'url': url,
             'linktext': linktext,
-            'list_items': list_items
+            'list_items': list_items,
+            'list_name': list_name
         }
         template = j_env.get_template('list.html')
         self.response.write(template.render(values))
 
 class Add(webapp2.RequestHandler):
     def post(self):
+        list_name = self.request.get('list_name', DAFAULT_LIST_NAME)
         user = users.get_current_user()
-        new_item = List_item(user_id = user.user_id(), item = self.request.get('item'), parent = list_key())
+        new_item = List_item(user_id = user.user_id(), item = self.request.get('item'), parent = list_key(list_name))
         new_item.put()
-        self.redirect('/list.html')
+        query_params = {'list_name': list_name}
+        self.redirect('/list.html?' + urllib.urlencode(query_params))
+        
 
 class DeleteAll(webapp2.RequestHandler):
     def post(self):
+        list_name = self.request.get('list_name', DAFAULT_LIST_NAME)
         user = users.get_current_user()
-        list_query = List_item.query(List_item.user_id == user.user_id(), ancestor = list_key()).order(-List_item.date)
+        list_query = List_item.query(List_item.user_id == user.user_id(), ancestor = list_key(list_name)).order(-List_item.date)
         list_items = list_query.fetch()
         for item in list_items:
             item.key.delete()
-        self.redirect('/list.html')
+        query_params = {'list_name': list_name}
+        self.redirect('/list.html?' + urllib.urlencode(query_params))
 
 class DeleteItem(webapp2.RequestHandler):
     def post(self):
+        list_name = self.request.get('list_name', DAFAULT_LIST_NAME)
         item_id = self.request.get('item_id')
-        key = ndb.Key('Shopping List', 'List', 'List_item', int(item_id))
+        key = ndb.Key('Shopping List', list_name, 'List_item', int(item_id))
         key.delete()
-        self.redirect('/list.html')
+        query_params = {'list_name': list_name}
+        self.redirect('/list.html?' + urllib.urlencode(query_params))
 
 class Edit(webapp2.RequestHandler):
     def post(self):
+        list_name = self.request.get('list_name', DAFAULT_LIST_NAME)
         item_id = self.request.get('item_id')
         edited = self.request.get('edit_item')
-        key = ndb.Key('Shopping List', 'List', 'List_item', int(item_id))
+        key = ndb.Key('Shopping List', list_name, 'List_item', int(item_id))
         list_item = key.get()
         list_item.item = edited
         list_item.put()
-        self.redirect('/list.html')
+        query_params = {'list_name': list_name}
+        self.redirect('/list.html?' + urllib.urlencode(query_params))
 
 
 app = webapp2.WSGIApplication([
