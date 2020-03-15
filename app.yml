@@ -9,6 +9,8 @@ handlers:
   script: shopping_list.app
   login: required
  
+- url: /static
+  static_dir: static
 
 - url: /.*
   script: shopping_list.app

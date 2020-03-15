@@ -72,11 +72,23 @@ class DeleteItem(webapp2.RequestHandler):
         key.delete()
         self.redirect('/list.html')
 
+class Edit(webapp2.RequestHandler):
+    def post(self):
+        item_id = self.request.get('item_id')
+        edited = self.request.get('edit_item')
+        key = ndb.Key('Shopping List', 'List', 'List_item', int(item_id))
+        list_item = key.get()
+        list_item.item = edited
+        list_item.put()
+        self.redirect('/list.html')
+
+
 app = webapp2.WSGIApplication([
     ('/', Home),
     ('/list.html', NewList),
     ('/list.html/add', Add),
     ('/list.html/delete-all', DeleteAll),
-    ('/list.html/delete', DeleteItem)
+    ('/list.html/delete', DeleteItem),
+    ('/list.html/edit', Edit)
     
 ], debug=True)# remember to remove!!!!!!!!!!!
