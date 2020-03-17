@@ -2,14 +2,25 @@
 {% block head %}
 <p>Hello {{ nickname }}!</p>
 <a href="{{ url|safe }}" class="btn">{{ linktext }}</a>
-<form action="/list_html/add-list" method="post">
-    <label for="list">Add an item:</label>
-    <input type="text" id="list" name="list">
+<form action="/list.html/add-list" method="post">
+    <label for="list">Add a new list:</label>
+    <input type="text" id="list" name="list" required>
     <input type="submit" value="Add">
 </form>
-<form action="/list_html/add" method="post">
+<form id="selectList">
+    <label for="list">Your lists:</label>
+    <select id="list" name="list" onchange="this.form.submit()">
+        <option value="choose" selected disabled>Choose a list</option>
+        {% for list in lists %}
+      <option value="{{ list.name }}">{{ list.name }}</option>
+        {% endfor %}
+    </select>
+  </form>
+
+<form action="/list.html/add" method="post">
     <label for="item">Add an item:</label>
-    <input type="text" id="item" name="item">
+    <input type="text" id="item" name="item" required>
+    <input type="hidden" name="list_name" value="{{ list_name }}">
     <input type="submit" value="Add">
 </form>
 
@@ -17,12 +28,14 @@
     {% for item in list_items %}
     <ul>
 
-        <form action="/list_html/edit" method="post">
+        <form action="/list.html/edit" method="post">
             <input type="text" name="edit_item" value="{{ item.item }}" id="{{ item.key.id() }}Input" readonly>
             <input type="hidden" name="item_id" value="{{ item.key.id() }}">
+            <input type="hidden" name="list_name" value="{{ list_name }}">
             <input type="submit" value="Save" class="d-none" id="{{ item.key.id() }}Submit" onclick=submitEdited(this.id)>
         </form>
-        <form action="/list_html/delete" method="post">
+        <form action="/list.html/delete" method="post">
+            <input type="hidden" name="list_name" value="{{ list_name }}">
             <input type="hidden" name="item_id" value="{{ item.key.id() }}">
             <input type="submit" value="x">
         </form>
@@ -31,7 +44,8 @@
     </ul>
     {% endfor %}
 </div>
-<form action="/list_html/delete-all" method="post">
+<form action="/list.html/delete-all" method="post">
+    <input type="hidden" name="list_name" value="{{ list_name }}">
     <input type="submit" value="Delete all">
 </form>
 {% endblock %}
