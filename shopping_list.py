@@ -16,11 +16,11 @@ j_env = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-DAFAULT_LIST_NAME = 'List'
 
 
-def list_key(name = DAFAULT_LIST_NAME):
-    return ndb.Key('Shopping List', name)
+
+def user_key(nickname):
+    return ndb.Key('User', nickname)
 
 class List_item(ndb.Model):
     user_id = ndb.StringProperty()
