@@ -39,7 +39,7 @@ class NewList(webapp2.RequestHandler):
         user = users.get_current_user()
         list_query = List_item.query(List_item.user_id == user.user_id(), ancestor = list_key(list_name)).order(-List_item.date)
         list_items = list_query.fetch()
-        url = users.create_logout_url(self.request.uri)
+        url = users.create_logout_url('/list.html')
         linktext = 'Logout'
         values = {
             'nickname': user.nickname(),
