@@ -50,10 +50,13 @@ class NewList(webapp2.RequestHandler):
             list_items = []
         url = users.create_logout_url('/list.html')
         linktext = 'Logout'
-        alert = ""
+        name_alert = ""
+        item_alert = ""
         name_exists = self.request.get('exists')
         if name_exists == 'True':
-            alert = "You already have a list with this name."
+            name_alert = "You already have a list with this name."
+        if list_name == "":
+            item_alert = "Choose a list or create a new one to add items."
         values = {
             'nickname': user.nickname(),
             'url': url,
@@ -61,7 +64,8 @@ class NewList(webapp2.RequestHandler):
             'list_items': list_items,
             'lists': lists,
             'list_name': list_name,
-            'alert': alert
+            'name_alert': name_alert,
+            'item_alert': item_alert
         }
         template = j_env.get_template('list.html')
         self.response.write(template.render(values))
@@ -92,12 +96,25 @@ class AddItem(webapp2.RequestHandler):
         list_name = self.request.get('list_name')
         list_query = List.query(List.user_id == user.user_id(), List.name == list_name, ancestor = user_key(user.user_id()))
         the_list = list_query.fetch()
-        new_item = List_item(item = self.request.get('item'), parent = the_list[0].key)
-        new_item.put()
+        if len(the_list) > 0:
+            new_item = List_item(item = self.request.get('item'), parent = the_list[0].key)
+            new_item.put()
         query_params = {'list': list_name}
         self.redirect('/list.html?' + urllib.urlencode(query_params))
-        
-        
+            
+class DeleteList(webapp2.RequestHandler):
+    def post(self):
+        user = users.get_current_user()
+        list_name = self.request.get('list_name')   
+        list_query = List.query(List.user_id == user.user_id(), List.name == list_name, ancestor = user_key(user.user_id()))
+        the_list = list_query.fetch()
+        if len(the_list) > 0:
+            items_query = List_item.query(ancestor = the_list[0].key)
+            list_items = items_query.fetch()
+            for item in list_items:
+                item.key.delete()
+            the_list[0].key.delete()
+        self.redirect('/list.html')
         
 
 class DeleteAll(webapp2.RequestHandler):
@@ -106,10 +123,11 @@ class DeleteAll(webapp2.RequestHandler):
         list_name = self.request.get('list_name')
         list_query = List.query(List.user_id == user.user_id(), List.name == list_name, ancestor = user_key(user.user_id()))
         the_list = list_query.fetch()
-        items_query = List_item.query(ancestor = the_list[0].key)
-        list_items = items_query.fetch()
-        for item in list_items:
-            item.key.delete()
+        if len(the_list) > 0:
+            items_query = List_item.query(ancestor = the_list[0].key)
+            list_items = items_query.fetch()
+            for item in list_items:
+                item.key.delete()
         query_params = {'list': list_name}
         self.redirect('/list.html?' + urllib.urlencode(query_params))
         #self.response.write(list_items[0].key)
@@ -150,6 +168,7 @@ app = webapp2.WSGIApplication([
     ('/list.html/add', AddItem),
     ('/list.html/delete-all', DeleteAll),
     ('/list.html/delete', DeleteItem),
-    ('/list.html/edit', Edit)
+    ('/list.html/edit', Edit),
+    ('/list.html/delete-list', DeleteList)
     
 ], debug=True)# remember to remove!!!!!!!!!!!

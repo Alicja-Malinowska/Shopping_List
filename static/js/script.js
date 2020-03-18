@@ -14,3 +14,10 @@ function submitEdited(id) {
     submit.classList.add("d-none");
     input.readOnly = true;
 }
+
+function item_alert() {
+    let message = document.getElementById("item_alert").innerHTML
+    if(message) {
+        alert(message)
+    }
+}
