@@ -48,20 +48,24 @@ class NewList(webapp2.RequestHandler):
             list_items = item_query.fetch()
         else:
             list_items = []
-        url = users.create_logout_url(self.request.uri)
+        url = users.create_logout_url('/list.html')
         linktext = 'Logout'
-        
+        alert = ""
+        name_exists = self.request.get('exists')
+        if name_exists == 'True':
+            alert = "You already have a list with this name."
         values = {
             'nickname': user.nickname(),
             'url': url,
             'linktext': linktext,
             'list_items': list_items,
             'lists': lists,
-            'list_name': list_name
+            'list_name': list_name,
+            'alert': alert
         }
         template = j_env.get_template('list.html')
         self.response.write(template.render(values))
-        #self.response.write(the_list)
+        #self.response.write(name_exists)
 
 class AddList(webapp2.RequestHandler):
     def post(self):
@@ -69,16 +73,16 @@ class AddList(webapp2.RequestHandler):
         list_query = List.query(List.user_id == user.user_id(), ancestor = user_key(user.user_id())).order(-List.date)
         lists = list_query.fetch()
         list_name = self.request.get('list')
-        unique = True
+        exists = False
         for a_list in lists:
             if a_list.name == list_name:
-                unique = False
+                exists = True
                 break
-        if unique:
+        if not exists:
             new_list = List(user_id = user.user_id(), name = list_name, parent = user_key(user.user_id()))
             new_list.put()
                
-        query_params = {'list': list_name}
+        query_params = {'list': list_name, 'exists': exists}
         self.redirect('/list.html?' + urllib.urlencode(query_params))
 
 
@@ -122,9 +126,6 @@ class DeleteItem(webapp2.RequestHandler):
         query_params = {'list': list_name}
         self.redirect('/list.html?' + urllib.urlencode(query_params))
         
-
-#Key('User', '185804764220139124118', 'List', 5642556234792960, 'List_item', 5149975025549312)
-#Key('user', "", 'List', 6169772060311552, 'List_item', 6275874932391936)
 
 class Edit(webapp2.RequestHandler):
     def post(self):

@@ -7,15 +7,22 @@
     <input type="text" id="list" name="list" required>
     <input type="submit" value="Add">
 </form>
+<p>{{ alert }}</p>
+
+
 <form id="selectList">
     <label for="list">Your lists:</label>
     <select id="list" name="list" onchange="this.form.submit()">
         <option value="choose" selected disabled>Choose a list</option>
         {% for list in lists %}
-      <option value="{{ list.name }}">{{ list.name }}</option>
+        {% if list_name == list.name %}
+        <option value="{{ list.name }}" selected>{{ list.name }}</option>
+        {% else %}
+        <option value="{{ list.name }}">{{ list.name }}</option>
+        {% endif %}
         {% endfor %}
     </select>
-  </form>
+</form>
 
 <form action="/list.html/add" method="post">
     <label for="item">Add an item:</label>
@@ -32,15 +39,17 @@
             <input type="text" name="edit_item" value="{{ item.item }}" id="{{ item.key.id() }}Input" readonly>
             <input type="hidden" name="item_id" value="{{ item.key.id() }}">
             <input type="hidden" name="list_name" value="{{ list_name }}">
-            <input type="submit" value="Save" class="d-none" id="{{ item.key.id() }}Submit" onclick=submitEdited(this.id)>
+            <input type="submit" value="Save" class="d-none" id="{{ item.key.id() }}Submit"
+                onclick=submitEdited(this.id)>
         </form>
         <form action="/list.html/delete" method="post">
             <input type="hidden" name="list_name" value="{{ list_name }}">
             <input type="hidden" name="item_id" value="{{ item.key.id() }}">
             <input type="submit" value="x">
         </form>
-        <button id="{{ item.key.id() }}Button" class="edit_button" onclick=edit(this.id)><i class="fas fa-edit"></i></button>
-        
+        <button id="{{ item.key.id() }}Button" class="edit_button" onclick=edit(this.id)><i
+                class="fas fa-edit"></i></button>
+
     </ul>
     {% endfor %}
 </div>
