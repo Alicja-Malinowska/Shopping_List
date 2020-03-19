@@ -37,7 +37,6 @@ class Home(webapp2.RequestHandler):
 
 class NewList(webapp2.RequestHandler):
     def get(self):
-        list_name = self.request.get('list_name', DAFAULT_LIST_NAME)
         user = users.get_current_user()
         list_query = List.query(List.user_id == user.user_id(), ancestor = user_key(user.user_id())).order(-List.date)
         lists = list_query.fetch()
@@ -74,7 +73,6 @@ class NewList(webapp2.RequestHandler):
 
 class AddList(webapp2.RequestHandler):
     def post(self):
-        list_name = self.request.get('list_name', DAFAULT_LIST_NAME)
         user = users.get_current_user()
         list_query = List.query(List.user_id == user.user_id(), ancestor = user_key(user.user_id())).order(-List.date)
         lists = list_query.fetch()
@@ -121,7 +119,6 @@ class DeleteList(webapp2.RequestHandler):
 
 class DeleteAll(webapp2.RequestHandler):
     def post(self):
-        list_name = self.request.get('list_name', DAFAULT_LIST_NAME)
         user = users.get_current_user()
         list_name = self.request.get('list_name')
         list_query = List.query(List.user_id == user.user_id(), List.name == list_name, ancestor = user_key(user.user_id()))
