@@ -12,13 +12,13 @@
                 <div id="add-new-list">
                     <form action="/list.html/add-list" method="post">
                         <label for="list">Add a new list:</label>
-                        <input type="text" id="list" name="list" class="vertical" maxlength="12" required onkeyup="countCharacters('remainingChars', this.id)">
+                        <input type="text" id="list" name="list" class="vertical" maxlength="12" required
+                            onkeyup="countCharacters('remainingChars', this.id)">
                         <p class="charCounter"><span id="remainingChars">12</span>/12</p>
                         <input type="submit" value="Add" class="btn btn-primary btn-sm vertical">
                     </form>
                 </div>
             </div>
-
             <!-- Drop down to select a list -->
             <div class="col-12 col-sm-6 text-left text-sm-center pb-2 pb-sm-3">
                 <form class="d-inline-block" id="selectList">
@@ -50,7 +50,8 @@
             <div class="col-12 text-left text-sm-center pb-3 pb-sm-4">
                 <form action="/list.html/add" method="post">
                     <label for="item">Add an item:</label>
-                    <input type="text" id="addItem" name="item" class="vertical" maxlength="30" required onkeyup="countCharacters('remainingCharsItems', this.id)">
+                    <input type="text" id="addItem" name="item" class="vertical" maxlength="30" required
+                        onkeyup="countCharacters('remainingCharsItems', this.id)">
                     <p class="charCounter"><span id="remainingCharsItems">30</span>/30</p>
                     <input type="hidden" name="list_name" value="{{ list_name }}">
                     <input type="submit" value="Add" class="btn btn-primary btn-sm vertical" onclick="item_alert()">
@@ -60,19 +61,20 @@
         </div>
         <div class="container">
             <div class="row justify-content-between">
-                
-            <h2 class="vertical">{{ list_name }}</h2>
-        
-            <!-- Button to delete all items in the list -->
-            
-            <div class="text-center pb-2 pb-sm-3" id="delete-all">
-                <form action="/list.html/delete-all" method="post">
-                    <input type="hidden" name="list_name" value="{{ list_name }}">
-                    <input type="submit" value="Delete all items" class="btn btn-danger btn-sm vertical" id="delete-all-button">
-                </form>
-            
-        </div>
-        </div>
+
+                <h2 class="vertical">{{ list_name }}</h2>
+
+                <!-- Button to delete all items in the list -->
+
+                <div class="text-center pb-2 pb-sm-3" id="delete-all">
+                    <form action="/list.html/delete-all" method="post">
+                        <input type="hidden" name="list_name" value="{{ list_name }}">
+                        <input type="submit" value="Delete all items" class="btn btn-danger btn-sm vertical"
+                            id="delete-all-button">
+                    </form>
+
+                </div>
+            </div>
         </div>
         <!-- List displayed here -->
         <div class="container border border-dark rounded text-center" id="listArea">

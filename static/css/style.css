@@ -1,0 +1,49 @@
+
+body {
+    font-size: .75rem;
+}
+
+#greeting, h2 {
+    font-size: 1.25rem;
+}
+
+h2 {
+    margin: 0;
+    padding-top:4px
+}
+
+#listArea {
+    height: 40vh;
+    overflow-y: auto;
+}
+
+.vertical {
+    vertical-align: middle;
+}
+
+#nameAlert {
+    margin: 0;
+    height: 16px;
+    color: #b8090c;
+}
+
+.noBorder {
+    border: none;
+}
+
+#item {
+    width: 70%;
+}
+
+.itemInput {
+    width:80%;
+}
+
+label {
+    font-weight: 700;
+}
+
+.charCounter {
+    font-size: .5rem;
+    display: inline;
+}
