@@ -2,11 +2,14 @@
 {% block head %}
 <p>Hello {{ nickname }}!</p>
 <a href="{{ url|safe }}" class="btn">{{ linktext }}</a>
+<!-- Field to add a new list-->
 <form action="/list.html/add-list" method="post">
     <label for="list">Add a new list:</label>
-    <input type="text" id="list" name="list" required>
+    <input type="text" id="list" name="list" maxlength="30" required>
     <input type="submit" value="Add">
 </form>
+
+<!-- Button to delte current (selected) list -->
 <form action="/list.html/delete-list" method="post">
     <input type="hidden" name="list_name" value="{{ list_name }}">
     <input type="submit" value="Delete this list">
@@ -15,7 +18,7 @@
 <p class="d-none" id="item_alert">{{ item_alert }}</p>
 
 
-
+<!-- Drop down to select a list -->
 <form id="selectList">
     <label for="list">Your lists:</label>
     <select id="list" name="list" onchange="this.form.submit()">
@@ -30,17 +33,20 @@
     </select>
 </form>
 
+<!-- Field to add an item to the list -->
 <form action="/list.html/add" method="post">
     <label for="item">Add an item:</label>
     <input type="text" id="item" name="item" required>
     <input type="hidden" name="list_name" value="{{ list_name }}">
     <input type="submit" value="Add" onclick="item_alert()">
 </form>
-<p id="item_alert">{{ item_alert }}</p>
+
+<!-- List displayed here -->
 <div class="container" id="listArea">
+    <p id="item_alert">{{ item_alert }}</p>
     {% for item in list_items %}
     <ul>
-
+        <!-- Items displayed and edited here -->
         <form action="/list.html/edit" method="post">
             <input type="text" name="edit_item" value="{{ item.item }}" id="{{ item.key.id() }}Input" readonly>
             <input type="hidden" name="item_id" value="{{ item.key.id() }}">
@@ -48,17 +54,21 @@
             <input type="submit" value="Save" class="d-none" id="{{ item.key.id() }}Submit"
                 onclick="submitEdited(this.id)">
         </form>
+        <!-- Delete item button -->
         <form action="/list.html/delete" method="post">
             <input type="hidden" name="list_name" value="{{ list_name }}">
             <input type="hidden" name="item_id" value="{{ item.key.id() }}">
             <input type="submit" value="x">
         </form>
+        <!-- Edit button that triggers the input field to be editable -->
         <button id="{{ item.key.id() }}Button" class="edit_button" onclick="edit(this.id)"><i
                 class="fas fa-edit"></i></button>
 
     </ul>
     {% endfor %}
 </div>
+
+<!-- Button to delete all items in the list -->
 <form action="/list.html/delete-all" method="post">
     <input type="hidden" name="list_name" value="{{ list_name }}">
     <input type="submit" value="Delete all" id="delete-all-button">
