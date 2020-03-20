@@ -32,9 +32,20 @@ class List_item(ndb.Model):
 
 class Home(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
+        if user:
+            url = users.create_logout_url('/')
+            linktext = 'Logout'
+        else:
+            url = users.create_login_url('/list.html')
+            linktext = 'Login'
         
+        values = {
+            'url': url,
+            'linktext': linktext
+        }
         template = j_env.get_template('index.html')
-        self.response.write(template.render())
+        self.response.write(template.render(values))
 
 class Dashboard(webapp2.RequestHandler):
     def get(self):
@@ -50,12 +61,9 @@ class Dashboard(webapp2.RequestHandler):
             items = item_query.fetch()
         else:
             items = []
-        if user:
-            url = users.create_logout_url('/list.html')
-            linktext = 'Logout'
-        else:
-            url = users.create_login_url('/list.html')
-            linktext = 'Login'
+        
+        url = users.create_logout_url('/list.html')
+        linktext = 'Logout'
         name_alert = ""
         item_alert = ""
         name_exists = self.request.get('exists')
