@@ -88,7 +88,7 @@
                             <i class="fas fa-check vertical"></i>
                             <form action="/list.html/edit" method="post" id="item">
                                 <input type="text" name="edit_item" value="{{ item.item }}"
-                                    id="{{ item.key.id() }}Input" class="noBorder itemInput" maxlength="30" readonly>
+                                    id="{{ item.key.id() }}Input" class="noBorder itemInput" maxlength="20" readonly>
                                 <input type="hidden" name="item_id" value="{{ item.key.id() }}">
                                 <input type="hidden" name="list_name" value="{{ list_name }}">
                                 <input type="submit" value="Save" class="d-none" id="{{ item.key.id() }}Submit"
