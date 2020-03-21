@@ -18,7 +18,7 @@ function submitEdited(id) {
 }
 
 function item_alert() {
-    let message = document.getElementById("item_alert").innerHTML
+    let message = document.getElementById("itemAlert").innerHTML
     if(message) {
         alert(message)
     }
