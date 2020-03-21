@@ -51,9 +51,9 @@
                 <div class="col-12 text-left text-md-center text-lg-left pb-3 pb-sm-4 inputLine">
                     <form action="/list.html/add" method="post">
                         <label for="item">Add an item:</label>
-                        <input type="text" id="addItem" name="item" class="vertical" maxlength="30" required
+                        <input type="text" id="addItem" name="item" class="vertical" maxlength="20" required
                             onkeyup="countCharacters('remainingCharsItems', this.id)">
-                        <p class="charCounter"><span id="remainingCharsItems">30</span>/30</p>
+                        <p class="charCounter"><span id="remainingCharsItems">20</span>/20</p>
                         <input type="hidden" name="list_name" value="{{ list_name }}">
                         <input type="submit" value="Add" class="btn btn-primary btn-sm vertical" onclick="item_alert()">
                     </form>
