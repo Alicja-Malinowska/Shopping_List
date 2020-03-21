@@ -4,7 +4,6 @@ threadsafe: true
 
 handlers:
 
-
 - url: /list.html
   script: shopping_list.app
   login: required
@@ -18,7 +17,6 @@ handlers:
 
 libraries:
 - name: webapp2
-#this needs to be changed to the actual version!!!!!!!!!!!!!!!!x2
   version: 2.3
 - name: jinja2
   version: 2.6
