@@ -13,25 +13,11 @@ indexes:
 - kind: List
   ancestor: yes
   properties:
-  - name: user_id
-  - name: date
-    direction: desc
-
-- kind: List_item
-  properties:
-  - name: user_id
   - name: date
     direction: desc
 
 - kind: List_item
   ancestor: yes
   properties:
-  - name: date
-    direction: desc
-
-- kind: List_item
-  ancestor: yes
-  properties:
-  - name: user_id
   - name: date
     direction: desc
