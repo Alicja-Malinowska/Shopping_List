@@ -24,3 +24,61 @@ This is an application that allows a user create and manage multiple shopping li
 * The characters limit for the edit is the same as for adding. 
 * When the 'save' button is clicked, the new value is saved and the item presentation (not content, obviously) comes back to the state from before the edit.
 * Each item can be deleted by clicking the button with a symbol 'x' next to it.
+
+### Some possible features that could be added
+
+* Possibility to mark items as bought/done (e.g. a checkbox; when checked the item name gets crossed out)
+* Warning before deleting items or lists
+* Option to share a list with another user
+
+## Technologies Used
+
+* Python
+* JavaScript
+* [Google AppEngine](https://cloud.google.com/appengine)
+* [Google Datastore NDB Client Library](https://cloud.google.com/appengine/docs/standard/python/ndb) 
+* HTML
+* CSS
+* [Bootstrap](https://getbootstrap.com/) - used for the responsive design, collapsable navbar, modals and collapsed text
+* [Visual Studio Code](https://code.visualstudio.com/) - an IDE used to write the code
+* [Git](https://git-scm.com/) - used for version control
+* [Font Awesome](https://fontawesome.com/) - all the icons on the website 
+
+## How to build and run the application
+
+1. To start you need to create a new project (or get existing one) in [Google Cloud Console](https://console.cloud.google.com/)
+2. Install (if you haven't already) [Google Cloud SDK](https://cloud.google.com/sdk/docs) that includes a local development server and the gcloud command-line for deploying and managing your apps.
+3. Initialize gcloud tool
+
+### How to run locally
+
+1. Clone the ShoppIt appliation:
+
+```
+https://github.com/Alicja-Malinowska/Shopping_List.git
+
+```
+2. To start local development web server, run the below command:
+
+```
+dev_appserver.py ./
+
+```
+3. You can now view the app in your browser [http://localhost:8080/](http://localhost:8080/)
+4. Please note that while development server accepts any email address to login, when the app is deployed, only a valid gmail address will be accepted and password will be required. 
+5. If you wish to stop the development center press `Control + C`
+
+### Deployment
+
+1. To deploy the application run the command:
+
+```
+gcloud app deploy app.yaml index.yaml
+
+```
+2. To view the deployed application run the command:
+
+```
+gcloud app browse
+
+```
