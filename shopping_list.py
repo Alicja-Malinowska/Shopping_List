@@ -1,5 +1,4 @@
 import os
-import json
 import urllib
 #import users API to use for login and authentication
 from google.appengine.api import users
