@@ -43,7 +43,7 @@ This is an application that allows a user create and manage multiple shopping li
 * [Google Datastore NDB Client Library](https://cloud.google.com/appengine/docs/standard/python/ndb) 
 * HTML
 * CSS
-* [Bootstrap](https://getbootstrap.com/) - used for the responsive design, collapsable navbar, modals and collapsed text
+* [Bootstrap](https://getbootstrap.com/)
 * [Visual Studio Code](https://code.visualstudio.com/) - an IDE used to write the code
 * [Git](https://git-scm.com/) - used for version control
 * [Font Awesome](https://fontawesome.com/) - all the icons on the website 
