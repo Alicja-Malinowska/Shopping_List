@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link rel="stylesheet" href="static/css/style.css">
-    <title>Shopping list</title>
+    <title>ShopIt - Shopping list</title>
 </head>
 
 <body>
     <nav class="navbar navbar-light bg-light justify-content-around">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <i class="fas fa-clipboard-list"></i>
             ShopIt
         </a>
@@ -21,7 +21,30 @@
         <a href="{{ url|safe }}" class="btn float-right">{{ linktext }}</a>
     </nav>
     {% block head %}
-    <a href="list.html" a>Create new list</a>
+    <main id="home">
+        <div class="container-fluid centered text-center" id="features">
+            <h1 class="text-center whiteSpace">ShopIt is an easy to use shopping list application</h1>
+            <div class="row" id="featureList">
+                <div class="col whiteSpace">
+                    <div class="row">
+                        <i class="fas fa-3x fa-copy"></i>
+                        <p class="feature">Create and manage multiple lists</p>
+                    </div>
+                    <div class="row">
+                        <i class="fas fa-3x fa-list-alt"></i>
+                        <p class="feature">Add and delete items from your lists</p>
+                    </div>
+                    <div class="row">
+                        <i class="fas fa-3x fa-edit"></i>
+                        <p class="feature">Edit your items</p>
+                    </div>
+                </div>
+            </div>
+            <div class="whiteSpace text-center">
+    <a href="list.html" class="btn btn-info" id="goToListButton">SEE YOUR LISTS OR CREATE A NEW ONE</a>
+</div>
+</div>
+</main>
     {% endblock %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

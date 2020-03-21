@@ -2,7 +2,7 @@ body {
     font-size: .75rem;
 }
 
-#greeting,
+h1,
 h2 {
     font-size: 1.25rem;
 }
@@ -11,6 +11,7 @@ h2 {
     margin: 0;
     padding-top: 4px
 }
+
 #currentList {
     font-weight: 300;
     font-size: 1rem;
@@ -70,12 +71,12 @@ label {
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
     .row {
-    max-width: 540px;
-    margin: auto;
-}
+        max-width: 540px;
+        margin: auto;
+    }
 }
 
-@media only screen and (min-width: 768px) and (max-width:  991.98px) {
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 
     .row {
@@ -83,21 +84,82 @@ label {
     }
 }
 
-@media (min-width: 992px){
+@media (min-width: 992px) {
     body {
         font-size: 1.25rem;
     }
-.row {
-    max-width: 1140px;
+
+    .row {
+        max-width: 1140px;
+        margin: auto;
+    }
+
+
+    .inputLine {
+        padding-top: 10vh;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+}
+
+/* INDEX.HTML STYLES */
+
+body {
+    overflow-x: hidden;
+}
+
+#home {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    display: block;
+    position: relative;
+}
+
+#home::after {
+    content: "";
+    background: url(../images/2772823.jpg);
+    background-size: cover;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+#features {
+    background-color: rgb(255, 255, 230, 0.7);
+    width: 80%;
+    height: 80%;
     margin: auto;
+    line-height: 300%
 }
 
-
-.inputLine {
-    padding-top: calc(50vh / 5);
+.centered {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-#greeting {
-    font-size: 1.75rem;
+.feature {
+    padding-left: .5rem;
 }
+
+.whiteSpace {
+    padding-top: 9vh;
+}
+
+#featureList {
+    margin: auto;
+    display: inline-block; 
+}
+
+#goToListButton {
+    padding: 2vh 1vw;
+    font-size: 1.5rem;
 }
